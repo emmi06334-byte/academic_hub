@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- <div class="sidebar">
+        <div class="logo">PD | Punam Dungdung</div>
+        <a href="#" onclick="filterFiles('notes')">📝 Notes</a>
+        <a href="#" onclick="filterFiles('pyqs')">📄 PYQs</a>
+        <a href="#" onclick="filterFiles('resources')">📚 Resources</a>
+        <a href="#" onclick="filterFiles('downloads')">📥 Downloads</a>
+        <a href="#" onclick="filterFiles('trash')">🗑️ Trash</a>
+    </div> -->
+    <div class="sidebar">
+    <div class="logo">PD | Punam Dungdung</div>
+    <a href="{{ url_for('index') }}">📁 All Files</a>
+    <a href="{{ url_for('filter_category', category='notes') }}">📝 Notes</a>
+    <a href="{{ url_for('filter_category', category='pyqs') }}">📄 PYQs</a>
+    <a href="{{ url_for('filter_category', category='resources') }}">📚 Resources</a>
+    <a href="{{ url_for('filter_category', category='downloads') }}">📥 Downloads</a>
+    <a href="{{ url_for('filter_category', category='trash') }}">🗑️ Trash</a>
+</div>
+
+
+    <div class="main">
+        
+        <div class="header">
+            <h1>Welcome to Academic Hub</h1>
+            <input type="text" id="search" placeholder="Search files...">
+            
+            <button onclick="document.getElementById('uploadModal').style.display='block'">Upload</button>
+        </div>
+
+        <div class="cards">
+            {% for file in files %}
+            <div class="card">
+                <h3>{{ file.filename }}</h3>
+                <p>{{ file.category }}</p>
+                <a href="{{ url_for('download_file', filename=file.filename) }}">⬇️ Download</a>
+                <a href="{{ url_for('delete_file', filename=file.filename) }}">❌ Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="uploadModal" class="modal">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="Title" required>
+            <select name="category">
+                <option value="notes">Notes</option>
+                <option value="pyqs">PYQs</option>
+                <option value="downloads">Downloads</option> 
+                <option value="resources">Resources</option>
+            </select>
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+            <button type="button" onclick="document.getElementById('uploadModal').style.display='none'">Cancel</button>
+            <div class="sidebar">
+    
+  </div>
+
+        </form>
+    </div>
+</body>
+</html>
